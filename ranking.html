@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2MONEY - Ranking</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style-gamificacao.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Cabeçalho -->
+        <div class="text-center mb-4">
+            <div class="money-icon">💰</div>
+            <a href="gamificacao.html" class="btn btn-outline-light btn-sm mt-2">
+                ← Voltar para Dashboard
+            </a>
+        </div>
+
+        <div class="row">
+            <!-- Coluna Principal - Ranking -->
+            <div class="col-lg-8">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="card-title mb-4">🏆 Ranking de Investidores</h3>
+                        <p class="text-muted">Clique em 2 usuários do mesmo nível para comparar</p>
+                        
+                        <!-- Filtro de Nível -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Filtrar por Nível:</label>
+                            <select class="form-select" id="levelFilter" onchange="filterByLevel()">
+                                <option value="all">Todos os Níveis</option>
+                                <option value="iniciante">Iniciante (1-3)</option>
+                                <option value="intermediario">Intermediário (4-7)</option>
+                                <option value="avancado">Avançado (8-10)</option>
+                                <option value="expert">Expert (11+)</option>
+                            </select>
+                        </div>
+
+                        <!-- Lista de Usuários -->
+                        <div id="rankingList">
+                            <p class="text-muted">Carregando ranking...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metas Semanais -->
+                <div class="card shadow mt-4" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>🎯 Metas Semanais</h3>
+                            <span class="badge bg-danger fs-6">⏱️ <span id="timer">7d 0h 0m</span></span>
+                        </div>
+                        <p>Complete as metas para ganhar XP! Renovam a cada 7 dias.</p>
+                        
+                        <div id="weekly-goals">
+                            <p class="text-light">Carregando metas...</p>
+                        </div>
+                        
+                        <div class="mt-3 p-3 rounded" style="background: rgba(255,255,255,0.2);">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>Progresso:</strong>
+                                    <span id="progress">0/5</span>
+                                </div>
+                                <div>
+                                    <strong>XP Ganhos:</strong>
+                                    <span id="xp-gained">+0 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral -->
+            <div class="col-lg-4">
+                <!-- Comparação -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5>⚔️ Comparar (<span id="selectedCount">0</span>/2)</h5>
+                        <p class="small text-muted">Selecione 2 usuários do mesmo nível</p>
+                        
+                        <div id="selected-users">
+                            <p class="text-muted small">Clique nos usuários</p>
+                        </div>
+                        
+                        <button class="btn btn-primary w-100 mt-3" id="compare-btn" disabled onclick="showComparison()">
+                            Comparar Usuários
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas Globais -->
+                <div class="card shadow mt-3">
+                    <div class="card-body">
+                        <h5>📊 Estatísticas Globais</h5>
+                        <div id="stats">
+                            <p class="text-muted">Carregando estatísticas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legenda de Níveis -->
+                <div class="card shadow mt-3">
+                    <div class="card-body">
+                        <h5>🎖️ Níveis</h5>
+                        <div class="level-legend">
+                            <div class="level-item">
+                                <span class="level-badge iniciante">1-3</span>
+                                <span>Iniciante</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-badge intermediario">4-7</span>
+                                <span>Intermediário</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-badge avancado">8-10</span>
+                                <span>Avançado</span>
+                            </div>
+                            <div class="level-item">
+                                <span class="level-badge expert">11+</span>
+                                <span>Expert</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparação Detalhada -->
+        <div id="comparison" style="display: none;" class="mt-4"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="ranking.js"></script>
+</body>
+</html>

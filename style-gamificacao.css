@@ -1,0 +1,410 @@
+/* style-gamificacao.css */
+
+body {
+    background: linear-gradient(135deg, #1a4d2e 0%, #0d2818 100%);
+    min-height: 100vh;
+    padding: 20px 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 1400px;
+}
+
+.card {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    margin-bottom: 20px;
+}
+
+.user-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 15px;
+    border-left: 5px solid transparent;
+}
+
+.user-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+}
+
+.user-card.selected {
+    border-left-color: #ffc107;
+    background: linear-gradient(to right, rgba(255,193,7,0.1), white);
+}
+
+.user-card.current-user {
+    border: 2px solid gold;
+    background: linear-gradient(to right, rgba(255,215,0,0.1), white);
+    position: relative;
+}
+
+.avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.rank-badge {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.rank-1 {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #000;
+}
+
+.rank-2 {
+    background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+    color: #000;
+}
+
+.rank-3 {
+    background: linear-gradient(135deg, #cd7f32, #e89f4f);
+    color: #fff;
+}
+
+.rank-other {
+    background: linear-gradient(135deg, #6c757d, #8d959d);
+    color: #fff;
+}
+
+.xp-bar {
+    background: #e9ecef;
+    border-radius: 20px;
+    height: 25px;
+    overflow: hidden;
+    margin: 8px 0;
+}
+
+.xp-progress {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    transition: width 0.5s ease;
+}
+
+.goal-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.goal-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.goal-card.completed {
+    opacity: 0.7;
+    background: rgba(40, 167, 69, 0.1);
+}
+
+.stat-box {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.chart-bar {
+    background: rgba(255,255,255,0.3);
+    border-radius: 8px;
+    height: 40px;
+    margin: 10px 0;
+    overflow: hidden;
+}
+
+.chart-fill {
+    background: linear-gradient(90deg, #28a745, #20c997);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-weight: bold;
+    color: white;
+    transition: width 0.5s ease;
+    min-width: 80px;
+}
+
+.progress-chart {
+    background: rgba(255,255,255,0.2);
+    border-radius: 15px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-fill {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, #28a745, #20c997);
+    transition: height 0.8s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 1050;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal-content-custom {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.btn-custom {
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+h1 {
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    font-weight: bold;
+}
+
+.investment-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #28a745;
+}
+
+.meta-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.locked-user {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.level-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    font-size: 1.5rem;
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+/* qualquer coisa eu apago isso abaixo */
+.botao-ranking {
+    background: #ffc107;
+    color: #000;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.botao-ranking:hover {
+    background: #e0a800;
+    transform: translateY(-2px);
+}
+/* ========== ESTILOS ADICIONAIS PARA RANKING.HTML ========== */
+/* Adicione este CSS ao final do arquivo style-gamificacao.css */
+
+/* Ícone de dinheiro no topo */
+.money-icon {
+    font-size: 4rem;
+    text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+/* Badge de nível no canto do card */
+.level-badge-corner {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+.level-badge-corner.iniciante {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+}
+
+.level-badge-corner.intermediario {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+}
+
+.level-badge-corner.avancado {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+}
+
+.level-badge-corner.expert {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+/* Legenda de níveis */
+.level-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.level-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.level-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    min-width: 50px;
+    text-align: center;
+}
+
+.level-badge.iniciante {
+    background: linear-gradient(135deg, #4ade80, #22c55e);
+}
+
+.level-badge.intermediario {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+}
+
+.level-badge.avancado {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+}
+
+.level-badge.expert {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+/* Progresso circular */
+.circular-progress {
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.circular-progress h3 {
+    color: #28a745;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Ajustes no card de usuário para ranking */
+.user-card {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .money-icon {
+        font-size: 3rem;
+    }
+    
+    .level-badge-corner {
+        width: 35px;
+        height: 35px;
+        font-size: 12px;
+    }
+}

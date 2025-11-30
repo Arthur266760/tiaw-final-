@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceQuest - Gamificação Financeira</title>
+    <!-- CSS: Framework e Estilos Customizados -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="style-gamificacao.css" rel="stylesheet">
+    
+    <!-- JS: Bibliotecas Externas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Carregando...</span>
+        </div>
+        <p class="mt-3">Conectando ao cofre de dados...</p>
+    </div>
+
+    <div class="container" id="mainApp" style="display:none;">
+        <h1 class="text-white text-center mb-4">💰 2 MONEY </h1>
+        <p class="text-white text-center small mb-4">
+            Seu ID de Usuário: <span id="currentUserIdDisplay" class="fw-bold">...</span>
+        </p>
+
+        <!-- Modal de Boas-vindas -->
+        <div id="welcomeModal" class="modal-overlay">
+            <div class="modal-content-custom">
+                <h2 class="text-center mb-4"> 💰 Bem-vindo ao 2 MONEY!</h2>
+                <p class="text-center mb-4">Comece sua jornada financeira com gamificação!</p>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">👤 Seu Nome:</label>
+                    <input type="text" class="form-control" id="userName" placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">🎯 Sua Meta de Economia (R$):</label>
+                    <input type="number" class="form-control" id="userGoal" placeholder="Ex: 50000">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">💵 Quanto você já tem economizado? (R$):</label>
+                    <input type="number" class="form-control" id="initialInvestment" placeholder="Ex: 1000">
+                </div>
+
+                <div class="form-check mb-4">
+                    <input class="form-check-input" type="checkbox" id="acceptRanking" checked>
+                    <label class="form-check-label" for="acceptRanking">
+                        🏆 Aceito participar do ranking público
+                    </label>
+                </div>
+
+                <button class="btn btn-success btn-custom w-100" onclick="startJourney()">
+                    Começar Jornada! 🚀
+                </button>
+            </div>
+        </div>
+
+        <!-- Modal de Investimento -->
+        <div id="investmentModal" class="modal-overlay">
+            <div class="modal-content-custom">
+                <h3 class="text-center mb-4">💰 Registrar Investimento</h3>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Data:</label>
+                    <input type="date" class="form-control" id="investmentDate">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Valor (R$):</label>
+                    <input type="number" class="form-control" id="investmentAmount" placeholder="Digite o valor">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Descrição (opcional):</label>
+                    <input type="text" class="form-control" id="investmentDesc" placeholder="Ex: Economia do mês">
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-success btn-custom flex-grow-1" id="saveInvestmentBtn" onclick="saveInvestment()">
+                        Salvar 💾
+                    </button>
+                    <button class="btn btn-secondary btn-custom" onclick="closeInvestmentModal()">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal de Meta Personalizada -->
+        <div id="customGoalModal" class="modal-overlay">
+            <div class="modal-content-custom">
+                <h3 class="text-center mb-4">🎯 Criar Meta Personalizada</h3>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Título da Meta:</label>
+                    <input type="text" class="form-control" id="customGoalTitle" placeholder="Ex: Ler 3 livros sobre finanças">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">XP ao completar:</label>
+                    <input type="number" class="form-control" id="customGoalXP" placeholder="Ex: 300" value="200">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Emoji (opcional):</label>
+                    <input type="text" class="form-control" id="customGoalIcon" placeholder="📚" maxlength="2">
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button class="btn btn-primary btn-custom flex-grow-1" onclick="saveCustomGoal()">
+                        Criar Meta 🎯
+                    </button>
+                    <button class="btn btn-secondary btn-custom" onclick="closeCustomGoalModal()">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="row">
+            <!-- Coluna Principal -->
+            <div class="col-lg-8">
+                <!-- Progresso Pessoal -->
+                <div class="card shadow" style="background: linear-gradient(135deg, #28a745, #20c997); color: white;">
+                    <div class="card-body">
+                        <h3 class="mb-3">📊 Seu Progresso <span id="currentUserLevel" class="badge bg-light text-success ms-2">Nível 1</span></h3>
+                        
+                        <!-- Gráfico de Progresso (Chart.js) -->
+                        <div class="d-flex justify-content-center mb-4">
+                            <canvas id="goalDoughnutChart" style="max-height: 200px; max-width: 200px;"></canvas>
+                        </div>
+                        <!-- Fim do Gráfico -->
+
+                        <div class="row text-center mb-3">
+                            <div class="col-4">
+                                <h4 id="currentMoney">R$ 0</h4>
+                                <small>Economizado</small>
+                            </div>
+                            <div class="col-4">
+                                <h4 id="goalMoney">R$ 0</h4>
+                                <small>Meta</small>
+                            </div>
+                            <div class="col-4">
+                                <h4 id="remainingMoney">R$ 0</h4>
+                                <small>Faltam</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Barra de Progresso Vertical Existente -->
+                        <div class="progress-chart">
+                            <div class="progress-fill" id="progressFill">0%</div>
+                        </div>
+
+                        <button class="btn btn-light btn-custom w-100 mt-3" onclick="openInvestmentModal()">
+                            ➕ Registrar Novo Investimento
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Histórico de Investimentos -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h4 class="mb-3">📈 Meus Investimentos (Clique para editar/excluir)</h4>
+                        <div id="investmentsList">
+                            <p class="text-muted">Carregando investimentos...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ranking -->
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h3 class="card-title mb-3"> Desempenho </h3>
+                        <p class="text-muted">Clique em 2 usuários do mesmo nível para comparar</p>
+                        <div id="leaderboard">
+                            <p class="text-muted">Carregando ranking...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metas Semanais -->
+                <div class="card shadow" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white;">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>🎯 Metas Semanais</h3>
+                            <span class="badge bg-danger fs-6">⏱️ <span id="timer">7d 0h 0m</span></span>
+                        </div>
+                        <p>Complete as metas para ganhar XP e subir de nível!</p>
+                        
+                        <button class="btn btn-light btn-custom mb-3" onclick="openCustomGoalModal()">
+                            ➕ Criar Meta Personalizada
+                        </button>
+
+                        <div id="weekly-goals">
+                            <p class="text-light">Carregando metas...</p>
+                        </div>
+                        
+                        <div class="mt-3 p-3 rounded" style="background: rgba(255,255,255,0.2);">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <strong>Progresso:</strong>
+                                    <span id="progress">0/5</span>
+                                </div>
+                                <div>
+                                    <strong>XP Ganhos:</strong>
+                                    <span id="xp-gained">+0 XP</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coluna Lateral -->
+            <div class="col-lg-4">
+                <!-- Comparação -->
+                 <!-- Botão para acessar o Ranking qualquer coisa eu apago isso aqui -->  
+                  <button id="btnRanking" class="btn-ranking">🏆 Ranking de Investidores</button>
+<!-- 
+<button id="btnRanking" class="botao-ranking w-100 mt-3">
+    🏆 Ranking de Investidores
+</button> -->
+
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5>⚔️ Comparar (<span id="selectedCount">0</span>/2)</h5>
+                        <p class="small text-muted">Selecione 2 usuários do mesmo nível</p>
+                        <div id="selected-users">
+                            <p class="text-muted small">Clique nos usuários</p>
+                        </div>
+                        <button class="btn btn-primary btn-custom w-100 mt-3" id="compare-btn" disabled onclick="showComparison()">
+                            Comparar Usuários
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Estatísticas Globais -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5>📊 Estatísticas Globais</h5>
+                        <div id="stats">
+                            <p class="text-muted">Carregando estatísticas...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Minhas Conquistas -->
+                <div class="card shadow">
+                    <div class="card-body">
+                        <h5>🏅 Minhas Conquistas</h5>
+                        <div id="achievements">
+                             <p class="text-muted">Carregando conquistas...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comparação -->
+        <div id="comparison" style="display: none;" class="mt-4"></div>
+    </div>
+
+    <!-- JS: Bibliotecas e Lógica da Aplicação -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="funcionalidade.js"></script>
+</body>
+</html>
