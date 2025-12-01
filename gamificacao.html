@@ -25,7 +25,39 @@
             Seu ID de Usuário: <span id="currentUserIdDisplay" class="fw-bold">...</span>
         </p>
 
-        <!-- Modal de Boas-vindas -->
+        <!-- Modal de Boas-vindas
+        <div id="welcomeModal" class="modal-overlay">
+            <div class="modal-content-custom">
+                <h2 class="text-center mb-4"> 💰 Bem-vindo ao 2 MONEY!</h2>
+                <p class="text-center mb-4">Comece sua jornada financeira com gamificação!</p>
+                
+                <div class="mb-3">
+                    <label class="form-label fw-bold">👤 Seu Nome:</label>
+                    <input type="text" class="form-control" id="userName" placeholder="Digite seu nome completo">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">🎯 Sua Meta de Economia Semanal(R$):</label>
+                    <input type="number" class="form-control" id="userGoal" placeholder="Ex: 50000">
+                </div>
+            
+                <div class="mb-3">
+                    <label class="form-label fw-bold">💵 Quanto você já tem economizado durante a semana? (R$):</label>
+                    <input type="number" class="form-control" id="initialInvestment" placeholder="Ex: 1000">
+                </div>
+
+                <div class="form-check mb-4">
+                <label class="form-label fw-bold">💵 Quanto você já tem disponibilizado em Reserva de Emergência:? (R$):</label>
+                <input type="number" class="form-control" id="initialInvestment" placeholder="Ex: 1000">
+                        
+                    </label>
+                </div>
+
+                <button class="btn btn-success btn-custom w-100" onclick="startJourney()">
+                    Começar Jornada! 🚀
+                </button>
+            </div>
+        </div> -->
         <div id="welcomeModal" class="modal-overlay">
             <div class="modal-content-custom">
                 <h2 class="text-center mb-4"> 💰 Bem-vindo ao 2 MONEY!</h2>
@@ -49,7 +81,7 @@
                 <div class="form-check mb-4">
                     <input class="form-check-input" type="checkbox" id="acceptRanking" checked>
                     <label class="form-check-label" for="acceptRanking">
-                        🏆 Aceito participar do ranking público
+                        Incializar a reserva de emergência
                     </label>
                 </div>
 
@@ -149,6 +181,7 @@
                                 <h4 id="remainingMoney">R$ 0</h4>
                                 <small>Faltam</small>
                             </div>
+                        
                         </div>
                         
                         <!-- Barra de Progresso Vertical Existente -->
@@ -173,9 +206,9 @@
                 </div>
 
                 <!-- Ranking -->
-
                 <div class="card shadow">
                     <div class="card-body">
+                        <div class="col-lg-4">
                         <h3 class="card-title mb-3"> Desempenho </h3>
                         <p class="text-muted">Clique em 2 usuários do mesmo nível para comparar</p>
                         <div id="leaderboard">
@@ -218,38 +251,7 @@
             </div>
 
             <!-- Coluna Lateral -->
-            <div class="col-lg-4">
-                <!-- Comparação -->
-                 <!-- Botão para acessar o Ranking qualquer coisa eu apago isso aqui -->  
-                  <button id="btnRanking" class="btn-ranking">🏆 Ranking de Investidores</button>
-<!-- 
-<button id="btnRanking" class="botao-ranking w-100 mt-3">
-    🏆 Ranking de Investidores
-</button> -->
-
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5>⚔️ Comparar (<span id="selectedCount">0</span>/2)</h5>
-                        <p class="small text-muted">Selecione 2 usuários do mesmo nível</p>
-                        <div id="selected-users">
-                            <p class="text-muted small">Clique nos usuários</p>
-                        </div>
-                        <button class="btn btn-primary btn-custom w-100 mt-3" id="compare-btn" disabled onclick="showComparison()">
-                            Comparar Usuários
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Estatísticas Globais -->
-                <div class="card shadow">
-                    <div class="card-body">
-                        <h5>📊 Estatísticas Globais</h5>
-                        <div id="stats">
-                            <p class="text-muted">Carregando estatísticas...</p>
-                        </div>
-                    </div>
-                </div>
-
+            
                 <!-- Minhas Conquistas -->
                 <div class="card shadow">
                     <div class="card-body">

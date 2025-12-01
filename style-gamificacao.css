@@ -141,7 +141,7 @@ body {
 }
 
 .chart-fill {
-    background: linear-gradient(90deg, #28a745, #20c997);
+    background: linear-gradient(90deg, rgb(53, 40, 167) #132721);
     height: 100%;
     display: flex;
     align-items: center;
